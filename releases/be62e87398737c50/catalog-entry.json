@@ -1,0 +1,15 @@
+{
+  "id": "alphabet",
+  "name": "Alphabet",
+  "available": true,
+  "version": "be62e87398737c50",
+  "modelUrl": "./models/alphabet/be62e87398737c50/model.json",
+  "weightsUrl": "./models/alphabet/be62e87398737c50/weights.bin",
+  "modelSha256": "03a28154fa5a19e9f3b9a05b732d833ef8b92cc5248afc67801f97d99bc9d7e2",
+  "weightsSha256": "576bfdaaa3dc028ccf285dd188f121b3b8055aa1ed8ba7fdb1c7276a903a88d9",
+  "bytes": 1956165,
+  "handUrl": "./shared/fbc2a30080c3c557093b5ddfc334698132eb341044ccee322ccf8bcf3607cde1.task",
+  "handSha256": "fbc2a30080c3c557093b5ddfc334698132eb341044ccee322ccf8bcf3607cde1",
+  "handBytes": 7819105,
+  "classes": 26
+}
