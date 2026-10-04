@@ -93,15 +93,18 @@ def main() -> None:
         "weightBytes": len(weights),
         "weightSha256": sha256(weights),
     }
-    # Release files are served as immutable, so the version must change whenever *any* content
-    # changes (weights or metadata), never just overwrite files at an already-cached URL.
-    version = sha256(weights + json.dumps(metadata, sort_keys=True).encode())[:16]
+    # Single line on purpose: with no line breaks, git's CRLF conversion can't change the bytes
+    # (and so the sha256 the app verifies) on Windows checkouts.
+    serialize = lambda m: json.dumps(m, separators=(",", ":")).encode()
+    # Release files are served as immutable, so the version is a hash of the exact bytes written
+    # (weights + model.json without its version): any change gets a new URL, never an overwrite.
+    version = sha256(weights + serialize(metadata))[:16]
     metadata = {"format": metadata.pop("format"), "category": metadata.pop("category"), "version": version, **metadata}
 
     out = config.RELEASES / version
     out.mkdir(parents=True, exist_ok=True)
     (out / "weights.bin").write_bytes(weights)
-    model_json = json.dumps(metadata, indent=1).encode()
+    model_json = serialize(metadata)
     (out / "model.json").write_bytes(model_json)
 
     probe = dataset.fixed(frames[split["test"][:3]], np.random.default_rng(3))
